@@ -1,0 +1,80 @@
+name: "omnivoice"
+backend: "python"
+max_batch_size: 4
+dynamic_batching {
+    max_queue_delay_microseconds: 1000
+}
+parameters [
+  {
+    key: "model_path"
+    value: { string_value: "${model}" }
+  },
+  {
+    key: "load_asr"
+    value: { string_value: "${load_asr}" }
+  },
+  {
+    key: "tllm_model_dir"
+    value: { string_value: "${trtllm}" }
+  },
+  {
+    key: "reference_audio_sample_rate"
+    value: { string_value: "24000" }
+  },
+  {
+    key: "debug"
+    value: { string_value: "${debug}" }
+  }
+]
+
+input [
+  {
+    name: "reference_wav"
+    data_type: TYPE_FP32
+    dims: [-1]
+    optional: True
+  },
+  {
+    name: "reference_wav_len"
+    data_type: TYPE_INT32
+    dims: [1]
+    optional: True
+  },
+  {
+    name: "reference_text"
+    data_type: TYPE_STRING
+    dims: [1]
+    optional: True
+  },
+  {
+    name: "target_text"
+    data_type: TYPE_STRING
+    dims: [1]
+  },
+  {
+    name: "language"
+    data_type: TYPE_STRING
+    dims: [1]
+    optional: True
+  },
+  {
+    name: "instruct"
+    data_type: TYPE_STRING
+    dims: [1]
+    optional: True
+  }
+]
+output [
+  {
+    name: "waveform"
+    data_type: TYPE_FP32
+    dims: [ -1 ]
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+  }
+]
