@@ -138,7 +138,7 @@ python test_client_http.py \
 | design_02 | Male, High Pitch, Indian Accent | The world is full of amazing wonders... | Known issue: noisy output |
 | design_03 | Female, Elderly, British Accent | The world is full of amazing wonders... | OK |
 
-> **Note**: `design_02` produces noisy output. This is a known limitation of the OmniVoice model itself (same behavior in PyTorch mode), not a TRT-LLM issue.
+> **Note**: `design_02` produces noisy output. This is likely caused by the TRT-LLM checkpoint conversion (PyTorch mode produces clean output). Needs investigation.
 
 ### Fine-Grained Control (3 samples)
 
